@@ -1,4 +1,11 @@
 version: "3.8"
+
+networks:
+  web-network:
+
+volumes:
+  data-volume:
+
 services:
   web:
     depends_on:
@@ -7,8 +14,13 @@ services:
       context: .
       dockerfile: docker/web
     container_name: azerfassung-web
+    tty: true
     ports:
       - "80:8090"
+    volumes:
+      - ./:/var/www
+    networks:
+      - web-network
   db:
     image: mongo:latest
     container_name: azerfassung-db
@@ -16,6 +28,3 @@ services:
       - "27017:8091"
     volumes:
       - data-volume:/Volumes/Development/web/azerfassung/.mongo-data
-
-volumes:
-  data-volume:
