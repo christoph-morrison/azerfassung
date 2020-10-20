@@ -1,0 +1,21 @@
+version: "3.8"
+services:
+  web:
+    depends_on:
+      - db
+    build:
+      context: .
+      dockerfile: docker/web
+    container_name: azerfassung-web
+    ports:
+      - "80:8090"
+  db:
+    image: mongo:latest
+    container_name: azerfassung-db
+    ports:
+      - "27017:8091"
+    volumes:
+      - data-volume:/Volumes/Development/web/azerfassung/.mongo-data
+
+volumes:
+  data-volume:
